@@ -1,0 +1,22 @@
+/* .containerimga {
+    position: relative;
+  } */
+  
+  /* Bottom right text */
+/*  .cardimga {
+   
+   
+  background-color: black;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px; 
+  }*/
+  .dot {
+  height: 30px;
+  width: 30px;
+  text-align: center;padding: 3px;position: absolute;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+  
