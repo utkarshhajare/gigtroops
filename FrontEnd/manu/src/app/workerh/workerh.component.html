@@ -1,0 +1,6 @@
+<p>workerh works!</p>
+<div *ngFor="let request of requests">
+    {{ request.id }} - {{ request.status }}
+    <button (click)="acceptRequest(request.id)">Accept</button>
+    <button (click)="denyRequest(request.id)">Deny</button>
+  </div>
