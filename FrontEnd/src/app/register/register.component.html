@@ -1,0 +1,135 @@
+<!-- Section: Design Block -->
+<section class="">
+    <!-- Jumbotron -->
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container">
+        <div class="row gx-lg-5 align-items-center">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="my-5 display-3 fw-bold ls-tight">
+             Book trusted help <br />
+              <span class="text-primary">and get your work done</span>
+            </h1>
+            <p style="color: hsl(217, 10%, 50.8%)">
+              
+            </p>
+          </div>
+  
+         
+
+            <div class="col-lg-6 mb-5 mb-lg-0">
+              <div class="card">
+                  <div class="card-body py-5 px-md-5">
+                      <form #clientReg="ngForm" (ngSubmit)="registerClient(clientReg.value)" novalidate>
+                          <h1>Register</h1>
+                          <!-- 2 column grid layout with text inputs for the first and last names -->
+                          <div class="row">
+                              <div class="col-md-6 mb-4">
+                                  <div class="form-outline form-floating" >
+                                      <input type="text" id="floatingInput firstName"class="form-control " name="firstName" ngModel
+                                          placeholder="Enter First name" minlength="1" maxlength="16"required />
+                                      <label class="form-label" for="firstName floatingInput">First name</label>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 mb-4">
+                                  <div class="form-outline form-floating">
+                                      <input type="text" id="lastName floatingInput" class="form-control" name="lastName" ngModel
+                                          placeholder="Enter last name" minlength="1" maxlength="16"required />
+                                      <label class="form-label" for="lastName floatingInput">Last name</label>
+                                  </div>
+                              </div>
+                          </div>
+          
+                          <!-- Email input -->
+                          <div class="form-outline mb-4 form-floating">
+                            <input type="email" id="email floatingInput" class="form-control" name="email" ngModel
+                                placeholder="Enter a email address" #email="ngModel"minlength="8" maxlength="24"required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+                            <label class="form-label" for="email floatingInput">Email address</label>
+                        </div>
+                        <div *ngIf="email.errors?.['minlength'] && email.touched">
+                          <p style="color: red;">Please enter at least 6 characters for email</p>
+                      </div>
+                      <div *ngIf="email.errors?.['pattern'] && email.touched">
+                        <p style="color: red;">Please enter valid email</p>
+                    </div>
+          
+                          <!-- Password input -->
+                          <div class="form-outline mb-4 form-floating" >
+                              <input type="password" id="password floatingInput" class="form-control" name="password" ngModel #password="ngModel"
+                                  placeholder="Enter Password" minlength="8" maxlength="16"required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{':;?/>.<,]).{8,16}$"/>
+                              <label class="form-label" for="password floatingInput">Password</label>
+                          </div>
+                          <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                            <div *ngIf="password.errors?.['required']">
+                                <p>Password is required</p>
+                            </div>
+                            <div *ngIf="password.errors?.['minlength']">
+                                <p>Password must be at least 8 characters long</p>
+                            </div>
+                            <div *ngIf="password.errors?.['pattern']">
+                                <p>Password must contain at least one lowercase letter</p>
+                            </div>
+                            <div *ngIf="password.errors?.['pattern']">
+                              <p>Password must contain at least one uppercase letter</p>
+                          </div><div *ngIf="password.errors?.['pattern']">
+                            <p>Password must contain at least one number</p>
+                        </div><div *ngIf="password.errors?.['pattern']">
+                          <p>Password must contain at least one special character</p>
+                      </div>
+                        </div>
+                        
+
+                                                
+                            <!-- <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                                <div *ngIf="password.errors?.required">
+                                    <p>Password is required</p>
+                                </div>
+                                <div *ngIf="password.errors?.minlength">
+                                    <p>Password must be at least 8 characters long</p>
+                                </div>
+                                <div *ngIf="password.errors?.maxlength">
+                                    <p>Password cannot exceed 16 characters</p>
+                                </div>
+                                <div *ngIf="password.errors?.pattern">
+                                    <p>Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character</p>
+                                </div>
+                            </div>
+                        </div>
+                         -->
+                          <!-- Confirm Password input -->
+                <div class="form-outline mb-4 form-floating">
+                    <input type="password" id="password floatingInput" class="form-control form-control-lg" name="confirmPassword" ngModel
+                        placeholder="Enter Confirm Password" minlength="8" maxlength="16" required />
+                    <label class="form-label" for="password floatingInput"> Confirm Password</label>
+                </div>
+                <div *ngIf="clientReg.controls['password'].touched && clientReg.controls['confirmPassword'].touched && clientReg.controls['password'].value !== clientReg.controls['confirmPassword'].value">Passwords do not match</div>
+          
+                          <!-- PhoneNo input -->
+                          <div class="form-outline mb-4 form-floating">
+                              <input type="text" id="phoneNo floatingInput" class="form-control" name="phoneNo" ngModel
+                                  placeholder="Enter Phone Number" minlength="10" maxlength="10"required />
+                              <label class="form-label" for="phoneNo floatingInput">Phone Number</label>
+                          </div>
+          
+                          <!-- Address input -->
+                          <div class="form-outline mb-4 form-floating">
+                              <input type="text" id="address floatingInput" class="form-control" name="address" ngModel
+                                  placeholder="Enter Address" minlength="8" maxlength="30" required />
+                              <label class="form-label" for="address floatingInput">Address</label>
+                          </div>
+          
+                          <!-- Submit button -->
+                          <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!clientReg.valid">
+                              Register
+                          </button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+    <!-- Jumbotron -->
+  </section>
+  <!-- Section: Design Block -->

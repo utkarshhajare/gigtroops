@@ -1,0 +1,59 @@
+<!-- <div class="row">
+    <div class="col-sm-3" *ngFor="let wor of allemps">
+        <div class="card" style="width: 250px;height: 450px;">
+            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="card-img-top "class="mx-auto d-block" alt="..." style="width: 180px;height: 180px;">
+            <div class="card-body">
+                <h5 class="">Name: </h5>
+                <p class="">Category: <br></p>
+                <p class="">Area: <br></p>
+                <p class="">Charges:<br>Per day price: /- <br>Per hour price: /-</p>
+                <p class=""></p>
+                <p class=""></p><a href="#" class="btn btn-primary">Hire</a>
+            </div>
+
+            <div class="card-body">
+                
+            
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- <div >
+  <div class="card mb-3" style="max-width: 80%;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Name: </h5>
+            <p class="">Category: </p>
+                  <p class="">Area: </p>
+                  <p class="">Charges:<br>Per day price: ₹ 1400 /- <br>Per hour price: ₹ 240 /-</p>
+                  <p class="">Work Experience: </p>
+                  <p class="">Customer Reviews:</p><a href="#" class="btn btn-primary">Hire</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<div class="container" *ngIf="workerDetails" >
+  <div class="card mb-3 mx-auto" style="max-width: 80%;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Name: {{workerDetails.firstName}} {{workerDetails.lastName}}</h5>
+         
+          <p class="">Category: {{workerDetails.category}}</p>
+          <p class="">Area: {{workerDetails.area}}</p>
+          <p class="">Charges:<br>Per day price: {{workerDetails.priceday|currency: 'INR':'symbol':'1.0-0'}} /- <br>Per hour price: {{workerDetails.pricehr|currency: 'INR':'symbol':'1.0-0'}} /-</p>
+          <p class="">Work Experience: </p>
+          <p class="">Customer Reviews:</p><a (click)="hireWorker(workerDetails.workerId)"class="btn btn-primary">Hire</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
