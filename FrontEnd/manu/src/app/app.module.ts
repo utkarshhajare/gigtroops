@@ -23,6 +23,17 @@ import { PlumberComponent } from './plumber/plumber.component';
 import { DetailsComponent } from './details/details.component';
 import { WorkerhComponent } from './workerh/workerh.component';
 import { ToastComponent } from './toast/toast.component';
+import { WorkerprofileComponent } from './workerprofile/workerprofile.component';
+import { CarcleanerComponent } from './carcleaner/carcleanercomponent';
+import { PlastererComponent } from './plasterer/plasterer.component';
+import { SecurityguardComponent } from './securityguard/securityguard.component';
+import { ConstructionworkerComponent } from './constructionworker/constructionworker.component';
+import { CookComponent } from './cook/cook.component';
+import { GardenerComponent } from './gardener/gardener.component';
+import { HousekeeperComponent } from './housekeeper/housekeeper.component';
+import { LabourComponent } from './labour/labour.component';
+import { MechanicComponent } from './mechanic/mechanic.component';
+import { PainterComponent } from './painter/painter.component';
 
 @NgModule({
   declarations: [
@@ -40,9 +51,16 @@ import { ToastComponent } from './toast/toast.component';
     DriverComponent,
     CarpenterComponent,
     PlumberComponent,
+    CarcleanerComponent,
+    PlastererComponent,
+    SecurityguardComponent,
+    ConstructionworkerComponent,
+    CookComponent,
+    GardenerComponent,HousekeeperComponent,LabourComponent,MechanicComponent,PainterComponent,
    DetailsComponent,
    WorkerhComponent,
-   ToastComponent
+   ToastComponent,
+   WorkerprofileComponent
   ],
   imports: [
     BrowserModule,

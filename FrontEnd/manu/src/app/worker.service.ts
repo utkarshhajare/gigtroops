@@ -46,6 +46,15 @@ export class WorkerService {
 getWorkerById(workerId: number): Observable<any> {
   return this.http.get<any>(`http://localhost:8080/getWorkerById/${workerId}`);
 }
+getWorkerByEmail(workerEmail: String): Observable<any> {
+  return this.http.get<any>(`http://localhost:8080/getWorkerByEmail/${workerEmail}`);
+}
+getClientByEmail(clientEmail: String): Observable<any> {
+  return this.http.get<any>(`http://localhost:8080/getClientByEmail/${clientEmail}`);
+}
+updateWorker(workerId: number, profileData: any): Observable<any> {
+  return this.http.put<any>(`http://localhost:8080/update/${workerId}`, profileData);
+}
 getClient(form: any): any {
   return this.http.get('http://localhost:8080/login/' + form.email + "/" + form.password);
 }
@@ -60,14 +69,22 @@ deleteWorker(worId: any): any {
   return this.http.delete('http://localhost:8080/deleteWorker/' + worId);
 }
 getWorkerRequests(workerId: number): Observable<WorkRequest[]> {
-  return this.http.get<WorkRequest[]>(`http://localhost:8080/workers/${workerId}/requests`);
+  return this.http.get<WorkRequest[]>(`http://localhost:8080/${workerId}/requests`);
 }
-
+getRespondedWorkRequests(workerId: number): Observable<WorkRequest[]> {
+  return this.http.get<WorkRequest[]>(`http://localhost:8080/${workerId}/respondedRequests`);
+}
 acceptRequest(requestId: number): Observable<void> {
-  return this.http.put<void>(`http://localhost:8080/workers/requests/${requestId}/accept`, {});
+  return this.http.put<void>(`http://localhost:8080/requests/${requestId}/accept`, {});
 }
 
 denyRequest(requestId: number): Observable<void> {
-  return this.http.put<void>(`http://localhost:8080/workers/requests/${requestId}/deny`, {});
+  return this.http.put<void>(`http://localhost:8080/requests/${requestId}/deny`, {});
+}
+uploadImage(workerId: number,formData: FormData): Observable<any> {
+  return this.http.post<any>(`http://localhost:8080/uploadImage/${workerId}`, formData);
+}
+getImage(workerId: number): Observable<any> {
+  return this.http.get<any>(`http://localhost:8080/${workerId}/image`);
 }
 }

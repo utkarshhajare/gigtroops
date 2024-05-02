@@ -3,8 +3,17 @@ import { HireService } from '../hire.service';
 import { WorkerService } from '../worker.service';
 interface WorkRequest {
   id: number;
-  status: string;
-  // Other properties of WorkRequest
+  client: Client;
+  worker: Worker;
+}
+
+export interface Client {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNo: string;
+  address: string;
 }
 @Component({
   selector: 'app-workerh',
@@ -12,26 +21,37 @@ interface WorkRequest {
   styleUrl: './workerh.component.css'
 })
 export class WorkerhComponent implements OnInit {
-  workerId: number = 1; // Assuming the worker ID is hardcoded for demonstration
-  requests: WorkRequest[] = [{ id: 1, status: 'Pending' },
-  { id: 2, status: 'Approved' },];
-
+  workerId: number=0; // Assuming the worker ID is hardcoded for demonstration
+  WorkRequests :any[]=[];
+  respondedWorkRequests :any[]=[];
   constructor(private workerService: WorkerService, private hireService: HireService) {}
 
   ngOnInit(): void {
+    const workerDataString = localStorage.getItem('workerData');
+    if (workerDataString) {
+      const workerData = JSON.parse(workerDataString);
+      this.workerId = workerData.workerId;
+     
+    }
     this.loadWorkerRequests();
+    this.loadRespondedWorkerRequests();
   }
 
   loadWorkerRequests(): void {
     this.workerService.getWorkerRequests(this.workerId)
-      .subscribe(requests => this.requests = requests);
+      .subscribe(requests => this.WorkRequests = requests);
+      
   }
-
+  loadRespondedWorkerRequests(): void {
+    this.workerService.getRespondedWorkRequests(this.workerId)
+      .subscribe(requests => this.respondedWorkRequests = requests);
+  }
   acceptRequest(requestId: number): void {
     this.workerService.acceptRequest(requestId)
       .subscribe(() => {
         // Refresh requests after accepting
         this.loadWorkerRequests();
+        this.loadRespondedWorkerRequests();
       });
   }
 
@@ -40,14 +60,8 @@ export class WorkerhComponent implements OnInit {
       .subscribe(() => {
         // Refresh requests after denying
         this.loadWorkerRequests();
+        this.loadRespondedWorkerRequests();
       });
   }
-  sendHireRequest(workerId: number): void {
-    this.hireService.sendHireRequest(workerId)
-      .subscribe(() => {
-        // Handle success
-      }, error => {
-        // Handle error
-      });
-  }
+ 
 }

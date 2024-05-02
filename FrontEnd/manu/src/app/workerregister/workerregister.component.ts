@@ -35,9 +35,11 @@ export class WorkerRegisterComponent {
       },
       (error:any) => console.log(error));
     }
+    
             alert("Register Success");
             this.service.setUserLoggedIn();
-            this.router.navigate(['workerdisplay']);
+            localStorage.setItem('workerEmail', formData.email);
+            this.router.navigate(['workerprofile']);
 
     }
   }

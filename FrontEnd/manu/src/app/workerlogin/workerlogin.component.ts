@@ -45,9 +45,12 @@ export class WorkerLoginComponent {
 
                 if (this.workers !=null) {
                     console.log(this.workers);
+                    
                     alert("Welcome to Workers Home Page ");
                     this.service.setUserLoggedIn();
-                    this.router.navigate(['workerdisplay']);
+                    localStorage.setItem('workerEmail', worForm.email);
+                    localStorage.setItem('workerData', JSON.stringify(this.workers));
+                    this.router.navigate(['workerhome']);
                 } else {
                     alert("Invalid credentials ");
                    // (error:any) => console.log(error);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mh.dao.ClientDao;
 import com.mh.model.Client;
+import com.mh.model.Worker;
 
 
 
@@ -38,6 +39,10 @@ public class ClientController {
 	@RequestMapping("getClientById/{id}")
 	public Client getClientById(@PathVariable("id") Integer id){
 		return clientDao.getClient(id);
+	}
+	@RequestMapping("getClientByEmail/{email}")
+	public Client getClientByEmail(@PathVariable("email") String clientEmail){
+		return clientDao.getClientByEmail(clientEmail); 
 	}
 	@GetMapping("/login/{email}/{password}")
 	public Client login(@PathVariable("email") String email, @PathVariable("password") String password) {

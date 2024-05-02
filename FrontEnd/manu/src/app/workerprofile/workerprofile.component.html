@@ -1,0 +1,162 @@
+<div class="container-xl px-4 mt-4" >
+    <div class="row" >
+        <div class="col-xl-4" >
+            <!-- Profile picture card -->
+            <div class="card mb-4 mb-xl-0" >
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center" >
+                    <!-- Profile picture image -->
+                    <img class="img-account-profile rounded-circle mb-2" [src]="'data:image/jpeg;base64,' + (profileData?.image || '')" alt="No Image" style="width: 200px;height: 200px;">
+                   
+                    <!-- Profile picture help block -->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button -->
+                    <!-- <button class="btn btn-primary" type="button">Upload new image</button> -->
+                    <input type="file" id="image" name="image"  (change)="onFileSelected($event)" accept="image/*" required>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card -->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form (submit)="updateProfile()">
+                        <!-- 2 column grid layout with text inputs for the first and last names -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline form-floating">
+                                    <input type="text" id="firstName" class="form-control" name="firstName" [(ngModel)]="profileData.firstName" placeholder="Enter First name" minlength="1" maxlength="16" required />
+                                    <label class="form-label" for="firstName">First name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline form-floating">
+                                    <input type="text" id="lastName" class="form-control" name="lastName" [(ngModel)]="profileData.lastName" placeholder="Enter last name" minlength="1" maxlength="16" required />
+                                    <label class="form-label" for="lastName">Last name</label>
+                                </div>
+                            </div>
+                        </div>
+                          <!-- Email input -->
+                <div class="form-outline mb-4 form-floating">
+                    <input type="email" id="email floatingInput" class="form-control" name="email" ngModel [(ngModel)]="profileData.email"
+                        placeholder="Enter a email address" #email="ngModel"minlength="8" maxlength="24"required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+                    <label class="form-label" for="email floatingInput">Email address</label>
+                </div>
+                <div *ngIf="email.errors?.['minlength'] && email.touched">
+                  <p style="color: red;">Please enter at least 6 characters for email</p>
+              </div>
+              <div *ngIf="email.errors?.['pattern'] && email.touched">
+                <p style="color: red;">Please enter valid email</p>
+            </div>
+             
+
+                <!-- Password input -->
+                <!-- <div class="form-outline mb-4 form-floating">
+                    <input type="password" id="password floatingInput" class="form-control form-control-lg" name="password" ngModel
+                        placeholder="Enter Password"#password="ngModel" minlength="8" maxlength="16"pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{':;?/>.<,]).{8,16}$" required />
+                    <label class="form-label" for="password floatingInput">Password</label>
+                </div> -->
+                <!-- <div *ngIf="password.errors?.['minlength'] && password.touched">
+                  <p>Please enter at least 8 characters for password</p>
+              </div> -->
+               <!-- <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                                <div *ngIf="password.errors?.['required']">
+                                    <p>Password is required</p>
+                                </div>
+                                <div *ngIf="password.errors?.['minlength']">
+                                    <p>Password must be at least 8 characters long</p>
+                                </div>
+                                <div *ngIf="password.errors?.['pattern']">
+                                    <p>Password must contain at least one lowercase letter</p>
+                                </div>
+                                <div *ngIf="password.errors?.['pattern']">
+                                  <p>Password must contain at least one uppercase letter</p>
+                              </div><div *ngIf="password.errors?.['pattern']">
+                                <p>Password must contain at least one number</p>
+                            </div><div *ngIf="password.errors?.['pattern']">
+                              <p>Password must contain at least one special character</p>
+                          </div>
+                            </div> -->
+                         
+                <!-- Confirm Password input -->
+                <!-- <div class="form-outline mb-4 form-floating">
+                    <input type="password" id="password floatingInput" class="form-control form-control-lg" name="confirmPassword" ngModel
+                        placeholder="Enter Confirm Password" minlength="8" maxlength="16" required />
+                    <label class="form-label" for="password floatingInput"> Confirm Password</label>
+                </div>
+                <div *ngIf="workerReg.controls['password'].touched && workerReg.controls['confirmPassword'].touched && workerReg.controls['password'].value !== workerReg.controls['confirmPassword'].value">Passwords do not match</div> -->
+                <!-- PhoneNo input -->
+                <div class="form-outline mb-4 form-floating">
+                    <input type="text" id="phoneNo floatingInput" class="form-control" name="phoneNo" ngModel [(ngModel)]="profileData.phoneNo"
+                        placeholder="Enter Phone Number" minlength="10" maxlength="10"required />
+                    <label class="form-label" for="phoneNo floatingInput">Phone Number</label>
+                </div>
+                 
+                  <!-- Area input -->
+                  <div class="form-floating">
+                    <select class="form-select" id="floatingSelect area" name="area" ngModel [(ngModel)]="profileData.area" aria-label="Floating label select example" required>
+                      <option selected disabled></option>
+                      <option value="Gachiboli">Gachiboli</option>
+                      <option value="Hi-tech City">Hi-tech City</option>
+                      <option value="Old City">Old City</option>
+                    </select>
+                    <label for="floatingSelect area">Select Your Work Area</label>
+                  </div>
+                  <br>
+                 
+                   <!-- Category input -->
+                   <div class="form-floating">
+                    <select class="form-select" id="floatingSelect category" name="category" ngModel [(ngModel)]="profileData.category" aria-label="Floating label select example" required>
+                      <option selected disabled></option>
+                      <option value="Electrician">Electrician</option>
+                      <option value="Carpenter">Carpenter</option>
+                      <option value="Driver">Driver</option>
+                    </select>
+                    <label for="floatingSelect category">Choose Your Category</label>
+                  </div>
+                  <br>
+                   <!-- Work Exp -->
+                   <div class="form-outline mb-4 form-floating">
+        <input type="text" id="workexp floatingInput" class="form-control" name="workexp" ngModel [(ngModel)]="profileData.workexp"
+            placeholder="Work Experience" minlength="1" maxlength="2" required />
+        <label class="form-label" for="workexp floatingInput">Work Experience</label>
+    </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <div class="input-group mb-3 ">
+                    <span class="input-group-text">₹</span>
+                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput priceday"name="priceday" ngModel [(ngModel)]="profileData.priceday"
+                    placeholder="Enter per day price" minlength="1" maxlength="6" required />
+                <label class="form-label " for="priceday floatingInput" >Enter price per day</label></div>
+                    <!-- <span class="input-group-text">.00</span> -->
+                  </div>
+                    </div>
+
+                    
+                    <div class="col-md-6 mb-4" >
+                      <div class="input-group mb-3 ">
+                    <span class="input-group-text">₹</span>
+                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput pricehr"name="pricehr" ngModel [(ngModel)]="profileData.pricehr"
+                    placeholder="Enter per day price" minlength="1" maxlength="6" required />
+                <label class="form-label" for="pricehr floatingInput" >Enter price per hour</label></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="form-outline mb-4 form-floating">
+        <input type="text" id="reviews floatingInput" class="form-control" name="reviews" ngModel [(ngModel)]="profileData.reviews"
+            placeholder="Reviews" minlength="8" maxlength="30" required />
+        <label class="form-label" for="reviews floatingInput">Reviews</label>
+    </div> -->
+   
+                        <!-- Save changes button -->
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

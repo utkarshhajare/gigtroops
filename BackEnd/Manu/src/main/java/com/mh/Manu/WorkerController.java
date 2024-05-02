@@ -1,11 +1,15 @@
 package com.mh.Manu;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,11 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.mh.dao.ClientRepository;
 import com.mh.dao.WorkRequestRepository;
 import com.mh.dao.WorkerDao;
 import com.mh.dao.WorkerRepository;
+import com.mh.model.Client;
 import com.mh.model.WorkRequest;
 import com.mh.model.Worker;
 
@@ -33,6 +41,8 @@ public class WorkerController {
 	private WorkerDao workerDao;  //dependency injection
 	@Autowired
 	WorkerRepository workerRepository;
+	@Autowired
+     ClientRepository clientRepository;
 	 @Autowired
 	    private WorkRequestRepository workRequestRepository;
 	    
@@ -50,6 +60,10 @@ public class WorkerController {
 	@RequestMapping("getWorkerById/{id}")
 	public Worker getWorkerById(@PathVariable("id") int workerId){
 		return workerDao.getWorker(workerId); 
+	}
+	@RequestMapping("getWorkerByEmail/{email}")
+	public Worker getWorkerByEmail(@PathVariable("email") String workerEmail){
+		return workerDao.getWorkerByEmail(workerEmail); 
 	}
 	@GetMapping("/workerlogin/{email}/{password}")
 	public Worker login(@PathVariable("email") String email, @PathVariable("password") String password) {
@@ -69,8 +83,16 @@ public class WorkerController {
 	        Worker worker = workerRepository.findById(workerId).orElseThrow(() -> new EntityNotFoundException("Worker not found"));
 	        return workRequestRepository.findByWorkerAndStatus(worker, "Pending");
 	    }
+	    @GetMapping("/{workerId}/respondedRequests")
+	    public List<WorkRequest> getRespondedWorkerRequests(@PathVariable Integer workerId) {
+	        Worker worker = workerRepository.findById(workerId).orElseThrow(() -> new EntityNotFoundException("Worker not found"));
+	        return workRequestRepository.findByWorkerAndStatusNot(worker, "!Pending");
+	    }
 	    @PostMapping("/{workerId}/hire")
-	    public ResponseEntity<?> createWorkRequest(@PathVariable Integer workerId, @RequestBody WorkRequest workRequest) {
+	    public ResponseEntity<?> createWorkRequest(@PathVariable Integer workerId, @RequestBody Map<String, Integer> requestPayload) { 
+	        // Extract the clientId from the request payload
+	        Integer clientId = requestPayload.get("clientId");
+
 	        // Validate the data (e.g., check for required fields, data formats, etc.)
 	        // If validation fails, return an appropriate response (e.g., BadRequest)
 
@@ -78,10 +100,15 @@ public class WorkerController {
 	        Worker worker = workerRepository.findById(workerId)
 	                .orElseThrow(() -> new EntityNotFoundException("Worker not found"));
 
-	        // Associate the work request with the worker
-	        workRequest.setWorker(worker);
+	        // Retrieve the client by ID
+	        Client client = clientRepository.findById(clientId)
+	                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
 
-	        // Set any other necessary fields in the work request
+	        // Create a new WorkRequest and set its attributes
+	        WorkRequest workRequest = new WorkRequest();
+	        workRequest.setWorker(worker);
+	        workRequest.setClient(client);
+	        workRequest.setStatus("Pending"); // Set status as "pending"
 
 	        // Save the work request to the database
 	        workRequestRepository.save(workRequest);
@@ -105,7 +132,40 @@ public class WorkerController {
 	        request.setStatus("Denied");
 	        workRequestRepository.save(request);
 	    }
-	
+	    @PutMapping("/update/{workerId}")
+	    public ResponseEntity<Worker> updateWorker(@PathVariable int workerId, @RequestBody Worker updatedWorker) {
+	        Worker updated = workerDao.updateWorker(workerId, updatedWorker);
+	        return new ResponseEntity<>(updated, HttpStatus.OK);
+	    }
+	    
+	    
+	    @PostMapping("/uploadImage/{workerId}")
+	    public ResponseEntity<String> uploadImage(@PathVariable("workerId") int workerId, @RequestPart("image") MultipartFile image) {
+	        Worker worker = workerRepository.findById(workerId).orElseThrow(() -> new EntityNotFoundException("Worker not found"));
+	        
+	        try {
+	            worker.setImage(image.getBytes());
+	            workerRepository.save(worker);
+	            return ResponseEntity.ok("Image uploaded successfully.");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image.");
+	        }
+	    }
+	    @GetMapping("/{workerId}/image")
+	    public ResponseEntity<byte[]> getWorkerImage(@PathVariable int workerId) {
+	        Worker worker = workerRepository.findById(workerId).orElseThrow(() -> new EntityNotFoundException("Worker not found"));
+	        byte[] imageData = worker.getImage();
+	        if (imageData != null && imageData.length > 0) {
+	            HttpHeaders headers = new HttpHeaders();
+	            headers.setContentType(MediaType.IMAGE_JPEG); // Assuming image is JPEG format, adjust accordingly
+	            headers.setContentLength(imageData.length);
+	            return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
+	        } else {
+	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	        }
+	    }
+	}
 //	@GetMapping("/workerlogin/{email}/{password}")
 //	    public ResponseEntity<Worker> workerLogin(@PathVariable String email, @PathVariable String password) {
 //	        // Your worker login logic
@@ -116,6 +176,6 @@ public class WorkerController {
 //	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 //	        }
 //	    }
-	}
+	
 
 

@@ -9,7 +9,9 @@ export class HireService {
 
   constructor(private http: HttpClient) {}
 
-  sendHireRequest(workerId: number): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/${workerId}/hire`, {})
+  sendHireRequest(workerId: number, clientId: number): Observable<any> {
+    const payload = { workerId, clientId };
+    console.log(payload);
+    return this.http.post<any>(`http://localhost:8080/${workerId}/hire`, payload)
   }
 }

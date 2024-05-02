@@ -37,6 +37,9 @@ export class LoginComponent {
                     console.log(this.clients);
                     alert("Welcome to Clients Home Page ");
                     this.service.setUserLoggedIn();
+                   // Convert the clients data to a string and store it in localStorage
+                    localStorage.setItem('clientData', JSON.stringify(this.clients));
+
                     this.router.navigate(['workerdisplay']);
                 } else {
                     alert("Invalid credentials ");

@@ -11,6 +11,8 @@ import com.mh.model.Worker;
 @Repository
 	public interface WorkRequestRepository extends JpaRepository<WorkRequest, Integer> {
 	    List<WorkRequest> findByWorkerAndStatus(Worker worker, String status);
+
+		List<WorkRequest> findByWorkerAndStatusNot(Worker worker, String status);
 	}
 
 

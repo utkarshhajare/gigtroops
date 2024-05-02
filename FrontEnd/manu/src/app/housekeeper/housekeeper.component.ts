@@ -17,5 +17,7 @@ export class HousekeeperComponent implements OnInit {
     this.empser.getAllWorkers().subscribe((data: any) => {
       this.allemps = data.filter((worker :any) => worker.category === "Housekeeper");
     });
+  } navigateToDetails(workerId: number) {
+    this.router.navigate(['details', workerId]);
   }
 }

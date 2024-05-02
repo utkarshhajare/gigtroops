@@ -3,18 +3,18 @@ import { Router } from '@angular/router';
 import { WorkerService } from '../worker.service';
 
 @Component({
-  selector: 'app-carpenter',
-  templateUrl: './carpenter.component.html',
-  styleUrls: ['./carpenter.component.css']
+  selector: 'app-constructionworker',
+  templateUrl: './constructionworker.component.html',
+  styleUrls: ['./constructionworker.component.css']
 })
-export class CarpenterComponent implements OnInit {
+export class ConstructionworkerComponent implements OnInit {
   allemps: any;
 
   constructor(private empser: WorkerService, private router: Router) {}
 
   ngOnInit(): void {
     this.empser.getAllWorkers().subscribe((data: any) => {
-      this.allemps = data.filter((worker: any) => worker.category === "Carpenter");
+      this.allemps = data.filter((worker: any) => worker.category === "Construction Worker");
     });
   }
 

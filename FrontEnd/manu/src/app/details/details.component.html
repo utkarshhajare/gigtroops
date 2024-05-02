@@ -41,7 +41,7 @@
   <div class="card mb-3 mx-auto" style="max-width: 80%;">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="img-fluid rounded-start" alt="...">
+        <img [src]="'data:image/jpeg;base64,' + workerDetails.image" class="img-fluid rounded-start" alt="..." style="height: 300px;width: 300px;">
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -50,8 +50,8 @@
           <p class="">Category: {{workerDetails.category}}</p>
           <p class="">Area: {{workerDetails.area}}</p>
           <p class="">Charges:<br>Per day price: {{workerDetails.priceday|currency: 'INR':'symbol':'1.0-0'}} /- <br>Per hour price: {{workerDetails.pricehr|currency: 'INR':'symbol':'1.0-0'}} /-</p>
-          <p class="">Work Experience: </p>
-          <p class="">Customer Reviews:</p><a (click)="hireWorker(workerDetails.workerId)"class="btn btn-primary">Hire</a>
+          <p class="">Work Experience: {{workerDetails.workexp}}</p>
+          <p class="">Customer Reviews: {{workerDetails.reviews}}</p><a (click)="hireWorker(workerDetails.workerId)"class="btn btn-primary">Hire</a>
         </div>
       </div>
     </div>

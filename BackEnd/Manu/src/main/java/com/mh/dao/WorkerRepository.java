@@ -1,5 +1,7 @@
 package com.mh.dao;
 
+import java.util.Optional;
+
 //import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +15,8 @@ import com.mh.model.Worker;
 public interface WorkerRepository extends JpaRepository<Worker,Integer> {
 	@Query("from Worker w where w.email = :email and w.password = :password")
 	public Worker workerlogin(@Param("email") String email, @Param("password") String password);
+
+	public Optional<Worker> findByEmail(String workerEmail);
 
 	
 }

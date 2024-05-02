@@ -3,6 +3,7 @@ package com.mh.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 
 
@@ -21,12 +22,16 @@ public class Worker {
 	private String category;
 	private int priceday;
 	private int pricehr;
-	
-	
+	private int workexp;
+	private int reviews;
+	 
+
+	@Lob
+	    private byte[] image; // Image data
 	
 	public Worker() {}
 
-	public Worker(int workerId,String firstName, String lastName, String email, String password, String phoneNo,String area,String category,int priceday,int pricehr
+	public Worker(int workerId,String firstName, String lastName, String email, String password, String phoneNo,String area,String category,int priceday,int pricehr,int workexp, int reviews
 			) {
 		super();
 		
@@ -40,7 +45,9 @@ public class Worker {
 		this.category=category;
 		this.priceday=priceday;
 		this.pricehr=pricehr;
-	}
+		this.workexp = workexp;
+		this.reviews = reviews;
+		}
 	
 	
 	public int getWorkerId() {
@@ -121,6 +128,30 @@ public class Worker {
 
 	public void setPricehr(int pricehr) {
 		this.pricehr = pricehr;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public int getWorkexp() {
+		return workexp;
+	}
+
+	public void setWorkexp(int workexp) {
+		this.workexp = workexp;
+	}
+
+	public int getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(int reviews) {
+		this.reviews = reviews;
 	}
 	
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mh.model.Client;
+import com.mh.model.Worker;
 
 
 
@@ -20,6 +21,9 @@ public class ClientDao {
 	
 	public Client getClient(int clientId){
 		return clientRepository.findById(clientId).orElse(new Client());
+	}
+	public Client getClientByEmail(String clientEmail){
+		return clientRepository.findByEmail(clientEmail).orElse(new Client());
 	}
 
 	public List<Client> getAllClients(){
