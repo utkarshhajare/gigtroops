@@ -13,6 +13,8 @@ import com.mh.model.Worker;
 	    List<WorkRequest> findByWorkerAndStatus(Worker worker, String status);
 
 		List<WorkRequest> findByWorkerAndStatusNot(Worker worker, String status);
+		 List<WorkRequest> findByClientIdAndStatusIn(Integer clientId, List<String> status);
+		
 	}
 
 

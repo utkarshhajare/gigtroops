@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 interface WorkRequest {
   id: number;
   status: string;
@@ -13,6 +14,7 @@ interface WorkRequest {
 export class WorkerService {
   isUserLoggedIn : boolean;
   loginStatus: Subject<any>; 
+  private apiUrl = '/api/notifications';
   constructor(private http:HttpClient) {
     this.isUserLoggedIn = false;
     this.loginStatus = new Subject(); 
@@ -86,5 +88,14 @@ uploadImage(workerId: number,formData: FormData): Observable<any> {
 }
 getImage(workerId: number): Observable<any> {
   return this.http.get<any>(`http://localhost:8080/${workerId}/image`);
+}
+
+
+getClientNotifications(clientId: number): Observable<any[]> {
+  return this.http.get<any[]>(`http://localhost:8080/client/${clientId}/notifications`);
+}
+
+markAsRead(workRequestId: number): Observable<any> {
+  return this.http.put(`http://localhost:8080/${workRequestId}/markAsRead`, {});
 }
 }

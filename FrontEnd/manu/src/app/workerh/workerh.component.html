@@ -4,10 +4,10 @@
         <thead class="bg-light">
           <tr>
            
-            <th>Name</th>
+            <th>Client's Name</th>
             <th>Address</th>
             <th>Status</th>
-            
+            <th>Date / Time</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -35,7 +35,9 @@
             <td>
               <p class="fw-normal mb-1">{{req.status}}</p>
             </td>
-           
+            <td>
+              <p class="fw-normal mb-1">{{req.requestTime  | date: 'd MMMM, y, h:mm:ss a' }} ({{ req.requestTime | timeAgo }})</p>
+            </td>
             <td>
               <button class="btn btn-success" (click)="acceptRequest(req.id)">Accept</button>
               <button class="btn btn-danger" (click)="denyRequest(req.id)">Deny</button>
@@ -62,10 +64,10 @@
         <thead class="bg-light">
           <tr>
            
-            <th>Name</th>
+            <th>Client's Name</th>
             <th>Address</th>
             <th>Status</th>
-            
+            <th>Date / Time</th>
            
           </tr>
         </thead>
@@ -93,7 +95,9 @@
             <td>
               <p class="fw-normal mb-1">{{req.status}}</p>
             </td>
-           
+            <td>
+              <p class="fw-normal mb-1">{{req.requestTime  | date: 'd MMMM, y, h:mm:ss a' }} ({{ req.requestTime | timeAgo }})</p>
+            </td>
            
           </tr>
          <tr *ngIf="respondedWorkRequests.length === 0">

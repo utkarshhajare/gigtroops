@@ -21,6 +21,7 @@ import { LoginAuthGuard } from './loginauth.guard';
 
 import { LogoutComponent } from './logout/logout.component';
 import { MechanicComponent } from './mechanic/mechanic.component';
+import { NotificationComponent } from './notification/notification.component';
 import { PainterComponent } from './painter/painter.component';
 import { PlastererComponent } from './plasterer/plasterer.component';
 import { PlumberComponent } from './plumber/plumber.component';
@@ -57,7 +58,8 @@ const routes: Routes = [
   {path: 'mechanic',component:MechanicComponent},
   {path: 'workerhome',component:WorkerhComponent},
   {path: 'workerprofile',component:WorkerprofileComponent},
-  {path: 'details/:id',component:DetailsComponent,canActivate:[AuthGuard]}
+  {path: 'details/:id',component:DetailsComponent,canActivate:[AuthGuard]},
+  {path: 'notification',component:NotificationComponent}
 
 ];
 

@@ -11,6 +11,7 @@ import { WorkerService } from '../worker.service';
 export class LogoutComponent {
   constructor(private service : WorkerService,private router : Router){
     this.service.setUserLogout();
+    localStorage.clear();
     this.router.navigate(['login']);
   }
 }

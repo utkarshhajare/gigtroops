@@ -34,6 +34,8 @@ import { HousekeeperComponent } from './housekeeper/housekeeper.component';
 import { LabourComponent } from './labour/labour.component';
 import { MechanicComponent } from './mechanic/mechanic.component';
 import { PainterComponent } from './painter/painter.component';
+import { NotificationComponent } from './notification/notification.component';
+import { TimeAgoPipe } from './time-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { PainterComponent } from './painter/painter.component';
    DetailsComponent,
    WorkerhComponent,
    ToastComponent,
-   WorkerprofileComponent
+   WorkerprofileComponent,
+   NotificationComponent,
+   TimeAgoPipe
   ],
   imports: [
     BrowserModule,

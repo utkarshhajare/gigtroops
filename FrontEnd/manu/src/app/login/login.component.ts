@@ -39,8 +39,12 @@ export class LoginComponent {
                     this.service.setUserLoggedIn();
                    // Convert the clients data to a string and store it in localStorage
                     localStorage.setItem('clientData', JSON.stringify(this.clients));
-
-                    this.router.navigate(['workerdisplay']);
+                        
+                    this.router.navigate(['workerdisplay']).then(() => {
+                        this.service.getClientNotifications(this.clients.id).subscribe(notifications => {
+                          const unreadNotifications = notifications.filter(notification => !notification.isRead);        });
+                        });
+                      
                 } else {
                     alert("Invalid credentials ");
                    // (error:any) => console.log(error);

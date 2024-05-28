@@ -23,15 +23,11 @@
           <li class="nav-item" >
           <a class="nav-link" [class.d-none]="loginStatus" routerLink="login">Login</a>
         </li>
-        <!-- <li class="nav-item" >
-          <a class="nav-link" routerLink="">WLogin</a>
-        </li> -->
+       
        <li class="nav-item">
          <a class="nav-link" [class.d-none]="loginStatus" routerLink="register">Register</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link"  routerLink="logout">Logout</a>
-         </li> -->
+       
       </ul>
       <button class="btn btn-outline-success" [class.d-none]="loginStatus" routerLink="workerlogin">Become a Worker</button> 
         
@@ -62,6 +58,72 @@
               </li>
             </ul>
           </div> -->
+          <a  class="notification"  data-bs-toggle="modal" data-bs-target="#myModal" (click)="loadNotifications()" >
+            <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
+          </svg></span>
+            <span class="badge">{{ notifications.length }}</span>
+          </a>
+          <div class="modal" id="myModal">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+          
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Notification  <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
+                  </svg></span></h4>
+                  <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                </div>
+                <div class="modal-body">
+                  <ul>
+                    <li *ngFor="let notification of notifications">
+                      <span >
+                       
+                        <div class="notification-ui_dd-content">
+                    <div class="notification-list notification-list">
+                        <div class="notification-list_content">
+                            <div class="notification-list_img">
+                                <img [src]="'data:image/jpeg;base64,' + notification.worker.image" alt="user">
+                            </div>
+                            <div class="notification-list_detail">
+                                <p><b>{{ notification.worker.firstName }} {{ notification.worker.lastName }}</b> {{ notification.status }} your work request</p>
+                                <!-- <p class="text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, dolorem.</p> -->
+                                <p class="text-muted"><small>{{ notification.requestTime | timeAgo }}</small></p>
+                            </div>
+                        </div>
+                       
+                    </div>
+                  
+                    <!-- <div class="notification-list">
+                        <div class="notification-list_content">
+                            <div class="notification-list_img">
+                                <img src="https://i.imgur.com/ltXdE4K.jpg" alt="user">
+                            </div>
+                            <div class="notification-list_detail">
+                                <p><b>Brian Cumin</b> reacted to your post</p>
+                                <p class="text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, dolorem.</p>
+                                <p class="text-muted"><small>10 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="notification-list_feature-img">
+                            <img src="https://i.imgur.com/bpBpAlH.jpg" alt="Feature image">
+                        </div>
+                    </div> -->
+             
+                    </div>
+                      <!-- {{ notification.requestTime  | timeAgo  }}:  by  -->
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+          
+            
+                
+          
+              </div>
+            </div>
+          </div>
          
           <div class="dropdown" [class.d-none]="!loginStatus">
             <button class="btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >

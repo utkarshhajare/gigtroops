@@ -1,6 +1,8 @@
 package com.mh.Manu;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -109,6 +111,8 @@ public class WorkerController {
 	        workRequest.setWorker(worker);
 	        workRequest.setClient(client);
 	        workRequest.setStatus("Pending"); // Set status as "pending"
+	        workRequest.setRequestTime(new Date()); // Set the current time using java.util.Date
+	        workRequest.setIsRead(false);
 
 	        // Save the work request to the database
 	        workRequestRepository.save(workRequest);
@@ -123,6 +127,7 @@ public class WorkerController {
 	    public void acceptRequest(@PathVariable Integer requestId) {
 	        WorkRequest request = workRequestRepository.findById(requestId).orElseThrow(() -> new EntityNotFoundException("Work request not found"));
 	        request.setStatus("Accepted");
+	        request.setRequestTime(new Date());
 	        workRequestRepository.save(request);
 	    }
 	    
@@ -130,6 +135,7 @@ public class WorkerController {
 	    public void denyRequest(@PathVariable Integer requestId) {
 	        WorkRequest request = workRequestRepository.findById(requestId).orElseThrow(() -> new EntityNotFoundException("Work request not found"));
 	        request.setStatus("Denied");
+	        request.setRequestTime(new Date());
 	        workRequestRepository.save(request);
 	    }
 	    @PutMapping("/update/{workerId}")
@@ -164,6 +170,22 @@ public class WorkerController {
 	        } else {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
+	    }
+	    @GetMapping("/client/{clientId}/notifications")
+	    public List<WorkRequest> getClientNotifications(@PathVariable Integer clientId) {
+	        List<String> status = Arrays.asList("Accepted", "Denied");
+	        return workRequestRepository.findByClientIdAndStatusIn(clientId, status);
+	    }
+
+	    @PutMapping("/{workRequestId}/markAsRead")
+	    public ResponseEntity<?> markAsRead(@PathVariable Integer workRequestId) {
+	        WorkRequest workRequest = workRequestRepository.findById(workRequestId)
+	                .orElseThrow(() -> new EntityNotFoundException("Work request not found"));
+
+	        workRequest.setIsRead(true);
+	        workRequestRepository.save(workRequest);
+
+	        return ResponseEntity.status(HttpStatus.OK).build();
 	    }
 	}
 //	@GetMapping("/workerlogin/{email}/{password}")
